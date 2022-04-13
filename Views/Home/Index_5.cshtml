@@ -1,0 +1,56 @@
+﻿@section Scripts
+{
+    <script src="~/js/index_five.js"></script>
+}
+@section Styles
+{
+
+}
+<!--
+    v-if & v-show：
+    其實都大同小異，只是v-if = false是刪除DOM，v-show=false是disable DOM!!
+-->
+<div id="app">
+    <label>
+        <input type="checkbox" v-model="isShow"> isShow: {{ isShow }}
+    </label>
+
+    <div class="wrap">
+        <div v-if="isShow"> V-if </div>
+        <div v-show="isShow"> V-show </div>
+    </div>
+    <div class="wrap">
+        <input type="button" v-on:click="addCount" v-bind:value="'Add '+ count" />
+        <div v-if="count === 0" style="background-color: #f00;">Block A: Count=0</div>
+        <div v-else-if="count < 5" style="background-color: green">Block B :Count < 5 </div>
+        <div v-else style="background-color: #00f;">Block C</div>
+    </div>
+    <!-- Vue.js在模板編譯過後不會使template渲染到畫面上～-->
+    <div class="wrap">
+        <template v-if="value == A">
+            <p>The area is A</p>
+        </template>
+        <template v-else>
+            <p>The area is B</p>
+        </template>
+    </div>
+</div>
+
+
+<!--
+    v-for：
+    可透過 v-for 指令在模板中，將「陣列」或「物件」類型的資料進行迭代渲染 (重複呈現在畫面上)。
+-->
+<div id="app2">
+    <div>
+        <ul>
+            <li v-for="(item, index) in arr">{{item}}/{{index}}</li>
+        </ul>
+    </div>
+    <!-- obj 也行-->
+    <div>
+        <ul>
+            <li v-for="(val, key, index) in obj">{{index}}. {{key}} : {{val}}</li>
+        </ul>
+    </div>
+</div>

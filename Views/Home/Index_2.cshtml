@@ -1,0 +1,41 @@
+﻿@section Scripts
+{
+    <script src="~/js/index_second.js"></script>
+}
+
+<h5>-- 如果是同樣的重複計算，用 computed 來處理會比 methods 效能來得好， 但要注意的是，computed 屬性中的 function 無法使用參數，若有需要帶入參數的情況，還是只能使用 methods來處理囉。 --</h5>
+<div id="app">
+    <p> 總金額共 {{ subtotalMethods() }} 元 </p>
+    <p> 總金額共 {{ subtotalMethods() }} 元 </p>
+    <p> 總金額共 {{ subtotalMethods() }} 元 </p>
+
+    <p> 總金額共 {{ subtotalComputed }} 元 </p>
+    <p> 總金額共 {{ subtotalComputed }} 元 </p>
+    <p> 總金額共 {{ subtotalComputed }} 元 </p>
+
+    <!-- 
+        console log:
+        -- methods
+        -- methods
+        -- methods
+
+        -- computed
+    -->
+</div>
+
+<br/>
+<h5>-- 在前端加入v-on:input的監聽功能＋methods functions --</h5>
+<div id="demo_methods">
+    <p>1 日幣 = 0.278 台幣</p>
+    <div>台幣 <input type="text" v-model="twd" v-on:input="twdTojpy"></div>
+    <div>日幣 <input type="text" v-model="jpy" v-on:input="jpyTotwd"></div>
+</div>
+
+<br/>
+<h5>-- 使用computed的get, set功能 --</h5>
+<div id="demo_computed">
+    <p>1 日幣 = 0.278 台幣</p>
+    <div>台幣 <input type="text" v-model="twd"></div>
+    <div>日幣 <input type="text" v-model="jpy"></div>
+    <div>美金 <input type="text" v-model="usd"></div>
+</div>

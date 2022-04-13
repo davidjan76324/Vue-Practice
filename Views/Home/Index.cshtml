@@ -1,0 +1,28 @@
+﻿@section Scripts
+{
+    <script src="~/js/index.js"></script>
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+<!-- 
+    1.Vue.js的模板語法採用Mustache語法，也就是在HTML以兩個大誇號{{ }} 來表示，大誇號的內容是Vue.js實體物件內的狀態.
+    2.若所使用的後端模板剛好也採用雙誇號，此時會在執行上衝突，可以利用delimiters來重新定義模板語法!
+-->
+<div id="demo">
+    <h1>{{ message}}</h1>
+    <input v-model="message">
+    <div>
+        <p>Price: {{price}}</p>
+        <p>Quantity: {{quantity}}</p>
+        <p>Total: {{quantity*price}}</p>
+    </div>
+</div>
+
+
+<div id="template_demo">
+</div>

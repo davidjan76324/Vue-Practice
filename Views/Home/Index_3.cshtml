@@ -1,0 +1,133 @@
+﻿@section Scripts
+{
+<script src="~/js/index_three.js"></script>
+}
+
+<h5>v-開頭的屬性們，在 Vue.js 裡面就被稱為 「指令」(directive)</h5>
+<h5>當與指令搭配運算式 (expression) 的值被改變時，對應的標籤 (包括節點、元件等) 也會隨之影響。</h5>
+<h5>換句話說，透過指令的作用與狀態的變化，我們也就可以透過改變狀態 (資料) 來操作整個網頁系統了。</h5>
+
+
+
+
+<!-- 
+    屬性綁定: v-bind:
+    像這樣，常見的標籤屬性如 id, src等DOM的屬性都可以用v-bind指令來控制他的內容！！
+
+
+    表單綁定： v-model:
+    在一個與高互動性的網頁中，表單類型的元素是不可或缺的。 常見的表單元素像是 input, textarea, select... 
+    在 Vue.js 可透過 v-model 來進行資料的「雙向」綁定
+-->
+<div id="app">
+    <div v-bind:id="customId"></div>
+    <div :id="customId_2"></div>
+    <button type="button" :disabled="isdisable"> Click me</button> <!-- 此處為簡寫方式： 「v-bind:disabled」 簡寫成 「:disabled」  -->
+    <button type="button" class="btn btn-success btn-sm" v-on:click="isdisableFunc"> Show & Hide Button</button>
+    <br />
+    <br />
+    <!-- input -->
+    <h5>input</h5>
+    <input v-model="message">
+    <p>Message is : {{message}}</p>
+    <br />
+    <br />
+    <!-- textarea -->
+    <h5>textarea</h5>
+    <textarea v-model="message_textarea" placeholder="add multiple lines"></textarea>
+    <!-- 雖然會顯示，但不會同步更新 -->
+    <textarea placeholder="add multiple lines">{{ message_textarea }}</textarea>
+    <br />
+    <br />
+    <!-- radio/ checkbox -->
+    <h5>radio/ checkbox</h5>
+    <div>
+        <input type="radio" id="one" value="1" v-model="picked">
+        <label for="one">One</label>
+    </div>
+    <div>
+        <input type="radio" id="two" value="2" v-model="picked">
+        <label for="two">Two</label>
+    </div>
+    <p>Picked: {{ picked }}</p>
+    <br />
+    <br />
+    <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+    <label for="jack">Jack</label>
+
+    <input type="checkbox" id="john" value="John" v-model="checkedNames">
+    <label for="john">John</label>
+
+    <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+    <label for="mike">Mike</label>
+
+    <input type="checkbox" id="mary" value="Mary" v-model="checkedNames">
+    <label for="mary">Mary</label>
+    <button type="button" class="btn btn-success btn-sm" v-on:click="clearAllCheckbox">Clear All</button>
+    <br>
+    <p>Checked names: {{ checkedNames }}</p>
+
+    <br>
+    <br>
+    <input type="checkbox" id="kk" v-model="checkedCheckbox">
+    <label for="kk">Status:{{checkedCheckbox}}</label>
+
+    <br>
+    <br>
+    <!-- select -->
+    <h5>Select</h5>
+    <select id="myselected" v-model="selected">
+        <option disabled value="">請選擇</option>
+        <option value="Taipei">台北市</option>
+        <option value="New Taipei">新北市</option>
+        <option value="Kaohsiung">高雄市</option>
+    </select>
+    <label for="myselected">value:{{selected}}</label>
+    <br>
+    <br>
+    <!-- .lazy -->
+    <!-- 
+        像這樣在v-model後面加上.lazy，這個input輸入匡就會從原本的input事件改為監聽事件(change)，換句話說，就會在使用者離開輸入匡焦點時才會更新data內容 
+    -->
+    <h5>.lazy</h5>
+    <input v-model.lazy="message_lazy" placeholder="edit me">
+    <p>Message with ".lazy" : {{ message_lazy }}</p>
+    <br>
+    <br>
+    <!-- .number -->
+    <h5>.number</h5>
+    <input v-model.number="num1"> + <input v-model.number="num2"> = {{ sum }}
+    <br>
+    <br>
+    <!-- .trim -->
+    <h5>.trim</h5>
+    <input v-model.trim="msg_trim">
+    <p>{{msg_trim}}</p>
+    <br>
+    <br>
+    <!-- v-html -->
+    <h5>v-html</h5>
+    <p v-html='msg_html'>Fuck</p>
+    <br>
+    <br>
+    
+    <!-- v-once -->
+    <!-- 
+        依然只會顯示最初的字樣，不會隨之更新！
+    -->
+    <h5>v-once</h5>
+    Edit: <input type="text" v-model="rawContent">
+    <div>
+        v-text:
+        <div class="text" v-text="rawContent"></div>
+    </div>
+    <div>
+        v-text with "v-once":(依然只會顯示最初的字樣，不會隨之更新)
+        <div class="html" v-text="rawContent" v-once></div>
+    </div>
+
+    <br>
+    <br>
+    <!-- CSS樣式綁定 -->
+    Edit: <input type="text" v-model.trim="message_cssBind" placeholder="請勿超過十個字" :style="msgStyle">
+</div>

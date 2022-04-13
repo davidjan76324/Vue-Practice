@@ -1,0 +1,186 @@
+﻿@section Scripts
+{
+    <script src="~/js/index_fore.js"></script>
+}
+@section Styles
+{
+    <style>
+        .p {
+            margin-bottom: 1rem;
+            padding: 10px;
+            background-color: yellow;
+
+            div {
+                margin-bottom: 5px;
+            }
+        }
+
+        .wrap {
+            float: left;
+            margin-right: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .outer {
+            cursor: pointer;
+            position: relative;
+            width: 150px;
+            height: 150px;
+            padding: 25px;
+            background-color: #ccc;
+            text-align: center;
+            margin-top: 1rem;
+
+            &:hover {
+                background-color: darken(#ccc, 10%);
+            }
+        }
+
+        .inner {
+            cursor: pointer;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            margin-left: -45px;
+            margin-top: -55px;
+            width: 90px;
+            height: 90px;
+            text-align: center;
+            line-height: 70px;
+            background-color: #f00;
+            color: #fff;
+
+            &:hover {
+                background-color: darken(#f00, 10%);
+            }
+        }
+    </style>
+}
+<!-- 
+    事件綁定: v-on:
+    我們大多透過v-model指令來與 Vue 實體的資料溝通，本篇的內容將帶領各位讀者理解， Vue.js 如何來操作與管理網頁的事件。
+
+    v-on也有簡寫，以@來代替，簡寫成@事件名稱=運算式
+
+    v-on的修飾子：
+    1).stop
+    2).prevent
+    3).capture
+    4).self
+    5).once
+    6).passive
+-->
+<div id="app">
+    <div>
+        <p>Count: {{ count }}</p>
+        <button id="clickMe" v-on:click="plus">Click Me</button>
+    </div>
+
+    <!-- 如果在methods需要傳入參數的話，則可以在模板指定傳入$event來指定傳入event物件 -->
+    <div>
+        <input v-model.number="amount">
+        <button type="button" v-on:click="plus_arg(amount,$event)">Click Me</button>
+    </div>
+
+
+    <!-- .stop -->
+    <!-- 阻擋事件冒泡發生 -->
+    <div class="p" v-show="msg.length > 0">
+        <div v-for="m in msg">{{ m }}</div>
+    </div>
+    <div class="wrap">
+        -- click without stopPropagation --
+        <div class="outer" v-on:click="alert('Outer')">
+            <span>Outer</span>
+            <div class="inner" v-on:click="alert('Inner')">Inner</div>
+        </div>
+    </div>
+    <div class="wrap">
+        -- click with stopPropagation --
+        <div class="outer" v-on:click="alert('Outer')">
+            <span>Outer</span>
+            <div class="inner" v-on:click.stop="alert('Inner')">Inner</div>
+        </div>
+    </div>
+</div>
+
+<br/>
+<br/>
+<div id="app_capture">
+    <!-- .capture -->
+    <!-- 捕捉事件冒泡發生 -->
+    <div class="p" v-show="msg.length > 0">
+        <div v-for="m in msg">{{ m }}</div>
+    </div>
+    <div class="wrap">
+        -- click without capture --
+        <div class="outer" v-on:click="alert('Outer')">
+            <span>Outer</span>
+            <div class="inner" v-on:click="alert('Inner')">Inner</div>
+        </div>
+    </div>
+    <div class="wrap">
+        -- click with capture --
+        <!-- 當outer的click事件加上.capture之後順序相反，點擊inner時會先印出outer(被捕捉了)再來才是inner... -->
+        <div class="outer" v-on:click.capture="alert('Outer')"> 
+            <span>Outer</span>
+            <div class="inner" v-on:click="alert('Inner')">Inner</div>
+        </div>
+    </div>
+</div>
+
+
+<br/>
+<br/>
+<div id="app_self">
+    <!-- .self -->
+    <div class="wrap">
+        -- click with self --
+        <div class="outer" v-on:click.self="alert('Outer')"> 
+            <span>Outer</span>
+            <div class="inner">Inner</div>
+        </div>
+    </div>
+</div>
+
+<br/>
+<br/>
+<div id="demo">
+    <!-- .once -->
+    <div>
+        <p>Count: {{ count }}</p>
+        <button v-on:click.once="plus">Plus Once</button>
+    </div>
+    <!-- event key -->
+    <div>
+        <p>你按下的是按鍵是: {{ pressKey }}</p>
+        <input type="text" v-on:keyup="press" />
+    </div>
+
+    <!-- 
+        鍵盤修飾子：
+        .enter
+        .tab
+        .delete
+        .space
+        .up
+        .down
+        .left
+        .right
+        .ctrl
+        .alt
+        .shift
+        .meta
+
+        **其中，.exact可以精確的判斷鍵盤的修飾子，不會讓以下的例子，因 Ctrl+Enter 也會過！！
+    -->
+    <div>
+        <p>你送出(enter)的訊息是: {{ press_enter_msg }}</p>
+        <input type="text" v-model="press_input" v-on:keydown.enter.exact="press_enter" />
+    </div>
+
+    <div>
+        <h5>拆解v-mdoel的黑魔法，請看以下連結：</h5>
+        <a href="https://book.vue.tw/CH1/1-5-events.html#%E6%8B%86%E8%A7%A3-v-model-%E7%9A%84%E9%BB%91%E9%AD%94%E6%B3%95"> 拆解v-model的黑魔法</a>
+    </div>
+</div>
