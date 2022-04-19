@@ -1,0 +1,45 @@
+﻿@section Scripts
+{
+    <script src="~/js/index_eight.js"></script>
+}
+@section Styles
+{
+
+}
+
+<h5>-- v-bind:is--</h5>
+<p>一般寫法</p>
+<div id="app">
+    <button v-for="(tab,index) in tabs" :key="tab" :class="['tab-button', { active: currentTab === tab }]"
+        v-on:click="currentTab = tab">
+        {{ tab }}
+    </button>
+
+    <tab-home v-if="currentTab === 'Home'"></tab-home>
+    <tab-posts v-if="currentTab === 'Posts'"></tab-posts>
+    <tab-archive v-if="currentTab === 'Archive'"></tab-archive>
+</div>
+
+<p> component+ v-bind:is 寫法</p>
+<div id="app_is">
+    <button v-for="(tab,index) in tabs" :key="tab" :class="['tab-button', { active: currentTab === tab }]"
+        v-on:click="currentTab = tab">
+        {{ tab }}
+    </button>
+    @* <tab-home v-if="currentTab === 'Home'"></tab-home>
+    <tab-posts v-if="currentTab === 'Posts'"></tab-posts>
+    <tab-archive v-if="currentTab === 'Archive'"></tab-archive> *@
+
+
+    <!-- 
+        避免使用component + v-bind:is 切換重新渲染，尤其是用在tempalte是input的時候，修改了input的值，切換後又重新渲染。
+        Ref: https://book.vue.tw/CH2/2-3-async-dynamic-components.html#keep-alive-%E4%BF%9D%E7%95%99%E5%85%83%E4%BB%B6%E7%8B%80%E6%85%8B
+     -->
+    <keep-alive> <!-- 當元件在動態切換的時候，若是沒有加上 <keep-alive>，標籤，則會在切換元件時重新觸發元件的各種生命週期階段。-->
+    @*<keep-alive include="tab-home, tab-archive">*@ <!-- 只保留 tab-home 與 tab-archive 的狀態 -->
+        <component :is="currentTabComponent" v-on:update="notify"></component>
+    </keep-alive>
+    <ul class="inspector">
+    <li v-for="m in msgs">{{ m }}</li>
+  </ul>
+</div>

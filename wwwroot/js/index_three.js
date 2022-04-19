@@ -7,7 +7,7 @@ var vm = Vue.createApp({
             message: "You are the best one!!",
             message_textarea: "Try me!",
             picked: 1,
-            checkedNames: [],
+            checkedNames: [], //用矩陣就會存取value，沒有矩陣就只有true or false
             checkedCheckbox: true,
             selected: "",
             message_lazy: "",

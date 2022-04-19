@@ -1,0 +1,38 @@
+﻿@section Scripts
+{
+    <script src="~/js/index_six.js"></script>
+}
+@section Styles
+{
+
+}
+<h1>生命週期</h1>
+<p>生命週期請至此有詳細解說：https://book.vue.tw/CH1/1-7-lifecycle.html</p>
+
+<p>以下為狀態的更新＆畫面的同步</p>
+<!-- 
+    DOM 的更新動作在 Vue.js 裡是非同步執行的，當偵測到狀態被更新時， 就會啟動一個排隊的隊伍 (Queue)，並且對同一個事件循環 (Event Loop) 內發生的所有變更進行緩衝，這樣做的好處，是若同一個watch
+    在短時間內被多次觸發，它只會被送進等待隊伍一次，可以省去多餘重複的計算次數，直到下一個事件循環 (Vue 官方稱tick) 才會刷新重整在等待隊伍內的任務，更新並且同步 Vue 實體內的 DOM。
+
+
+    簡單來說， $nextTick 的使用時機在當狀態更新時，需要手動存取 DOM 的時候，需要確保畫面都已更新完成。
+    這時$nextTick的重要性便不言而喻。
+-->
+<div id="app">
+    <div>
+        <p id="info">
+            messages: {{ messages }}
+        </p>
+
+        <p>
+            scrollHeight: {{ scrollHeight }} <br>
+            DOM 實際的 scrollHeight: {{ realScrollHeight }}
+        </p>
+
+        <div class="messages">
+            <div v-for="m in messages">{{ m }}</div>
+        </div>
+
+        <input type="text" placeholder="輸入任意文字後按下 enter 鍵" v-model.trim="msg" v-on:keydown.enter="addToMessages()">
+    </div>
+</div>

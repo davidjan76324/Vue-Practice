@@ -50,7 +50,7 @@ let vm_self = Vue.createApp({
     },
     methods: {
         alert(val) {
-            alert("is "+val)
+            alert(`is ${val}`)
         }
     },
 

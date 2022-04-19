@@ -19,7 +19,7 @@ var vm = Vue.createApp({ // vm = Vue.js 的實體物件,
 let vMountedInstance = vm.mount('#demo'); // 透過 mount 與網頁的 HTML結合， 也就是這個 Vue.js實體物件 (根元件) 可以控制的範圍，就可以順利將這個 Vue.js實體掛載至 <div id="app"> 這個節點。
 
 //vm.$data.message = "Test"  // Error: 若我們在createApp時並未將此實體同時掛載到某個DOM節點，所以用 vm.$data.name會跳出無法設定的錯誤!
-vMountedInstance.$data.message = "Fuck you!!!" //vMountedInstance已經掛載上去了，所以可以操作data!!
+vMountedInstance.$data.message = "Love you!!!" //vMountedInstance已經掛載上去了，所以可以操作data!!
 
 
 

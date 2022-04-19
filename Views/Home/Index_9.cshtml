@@ -1,0 +1,70 @@
+﻿@section Scripts
+{
+    <script src="~/js/index_nine.js"></script>
+}
+@section Styles
+{
+
+}
+
+<h1>編譯作用域＆slot插槽</h1>
+<p>solt 在官方文件的名稱叫做「插槽」，顧名思義，就是在子元件上面開個洞， 由外層元件將內容置放在至子層元件指定的位置中。</p>
+<div id="app">
+    <h1>{{ msg }}</h1>
+
+    <!-- 猜猜看，此時畫面會出現什麼？ -->
+    <custom-component>
+        <u>{{ msg }}</u> <!-- 有開slot的話，component內的整段都會塞到solt那行，另外參數也可以抓父元件的參數！-->
+    </custom-component>
+</div>
+
+
+<br/>
+<br/>
+<h5>-- 具名插槽 --</h5>
+<div id="app_slotName">
+    <light-box>
+        <template #header> <!-- 「v-slot」 可以簡寫 「#」-->
+            <h2>008JS 好棒棒!</h2>
+        </template>
+        <template v-slot:footer>
+            <h2>大家快來買！</h2>
+        </template>
+        <div>
+            <a target="_blank" href="https://www.tenlong.com.tw/products/9789864344130">購書傳送門</a>
+        </div>
+    </light-box>
+</div>
+
+<br/>
+<br/>
+<h5>-- 動態具名插槽 --</h5>
+<div id="app_slotName_Dynamic">
+    <label v-for="opt in options">
+        <input type="radio" :value="opt" v-model="dynamic_slot_name"> {{ opt }}
+    </label>
+    <light-box>
+        <template v-slot:[dynamic_slot_name]> 
+            <h2>DavidJan 好棒棒!</h2>
+        </template>
+    </light-box>
+</div>
+
+<h5>-- 動態具名插槽2 --</h5>
+<div id="app_scopslot">
+   <p>
+    請選擇:
+    <select v-model="lang">
+      <option v-for="n in langOptions" :value="n.val">
+        {{ n.name }}
+      </option>
+    </select>
+  </p>
+
+  <light-box :lang="lang">
+      <!-- 外層的模板則需要加上 template 標籤，以及 v-slot:[slot Name]="[object]"-->
+      <template v-slot:default="myBackInfo">
+          <u>{{ langOptions.find(d => d.val === lang)['name'] }}:{{myBackInfo.hello}}</u> <!-- 有slot的話，可以直接拿取父的資料 -->
+      </template>
+  </light-box>
+</div>

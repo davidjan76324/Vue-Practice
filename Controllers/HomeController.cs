@@ -39,6 +39,30 @@ namespace vue_practice.Controllers
         {
             return View();
         }
+        public IActionResult Index_6()
+        {
+            return View();
+        }
+        public IActionResult Index_7()
+        {
+            return View();
+        }
+        public IActionResult Index_8()
+        {
+            return View();
+        }
+        public IActionResult Index_9()
+        {
+            return View();
+        }
+        public IActionResult Index_10()
+        {
+            return View();
+        }
+        public IActionResult Index_11()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {

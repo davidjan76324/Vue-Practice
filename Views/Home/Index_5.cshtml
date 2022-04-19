@@ -8,7 +8,7 @@
 }
 <!--
     v-if & v-show：
-    其實都大同小異，只是v-if = false是刪除DOM，v-show=false是disable DOM!!
+    其實都大同小異，只是v-if = false 是刪除DOM，v-show=false 是 disable DOM !!
 -->
 <div id="app">
     <label>
@@ -52,5 +52,46 @@
         <ul>
             <li v-for="(val, key, index) in obj">{{index}}. {{key}} : {{val}}</li>
         </ul>
+    </div>
+    <!-- v-for with template -->
+    <div>
+        <template v-for="i in links">
+            <p>Title: {{i.title}} / Link: {{i.link}}</p>
+        </template>
+    </div>
+
+    <!-- 
+        Hint: 
+        Vue.js 做到為了效能最佳化，會把已經渲染至畫面的 DOM 節點拿來重複利用。 
+        當我們打勾的是「選項 2」的時候，這個時候 done list 會多出一個選項 2 。
+        但對 todo list 來說，長度減一，所以對應的元素少了一個， 原本在「選項 2」的文字更新，但 checkbox 卻在這個時候被拿來重複利用。
+
+        若是要解決這個問題，只要加個「唯一的」key 屬性作為識別，即可確保畫面的重新渲染：
+
+
+        注意：不要用list的index作為 key，由於v-for裡的index是隨著陣列生成的，當index沒變得時候，對 Vue.js 而言，它就是一個可以重複使用的元素 (或元件)。
+
+        Ref:https://book.vue.tw/CH1/1-6-conditions-and-flow-control.html#v-for-%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8-index-%E7%95%B6%E4%BD%9C-key-%E5%97%8E
+    -->
+    <div class="wrap">
+        <div class="todo-lists">
+            <h3>Todo List</h3>
+            <ul>
+                <li v-for="i in todoLists()">
+                @* <li v-for="i in todoLists()" :key="i.id"> *@
+                    <label><input v-model="i.isDone" type="checkbox"> {{ i.title }}</label>
+                </li>
+            </ul>
+        </div>
+
+        <div class="done-lists">
+            <h3>Done List</h3>
+            <ul>
+                <li v-for="i in doneLists()">
+                @* <li v-for="i in doneLists()" :key="i.id"> *@
+                    <label><input v-model="i.isDone" type="checkbox"> {{ i.title }}</label>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

@@ -1,0 +1,89 @@
+﻿@section Scripts
+{
+    <script src="https://unpkg.com/mitt/dist/mitt.umd.js"></script>
+    <script src="~/js/index_seven.js"></script>
+}
+@section Styles
+{
+
+}
+<h1>元件的宣告與註冊</h1>
+<!-- 
+    Vue.js 的元件就是個可以被重複使用的實體。 如同我們在前一章介紹過的，每一個元件都可以有自己的 data, computed, methods...，甚至是生命週期的 Hooks function。 
+    如同 JavaScript 的變數可分為全域變數與區域變數，元件的宣告同樣可以分為「全域元件」或「區域元件」。
+
+
+-->
+<h5>-- component-- </h5>
+<div id="app">
+    <h3>Root Instance</h3>
+    <!-- 建議連字號(kebab-case)命名 component!-->
+    <my-component></my-component>
+    <my-component></my-component>
+</div>
+
+<br />
+<br />
+<h5>-- props-- </h5>
+<div id="app2">
+    <!-- 這是外層元件的 msg -->
+    <h3>{{ msgGirl }}</h3>
+
+    <!-- 這裡的 v-bind:parent-msg 可以簡寫為 :parent-msg -->
+    <!-- 在模板裡要轉換成連字號 (kebab-case) -->
+    <my-component v-bind:parent-msg="msgGirl" parent-msg-no-bind="Hello"></my-component>
+    <my-componentformat v-bind:parent-value="123"></my-componentformat>
+    <hr>
+    <!-- 以物件作為props傳遞 -->
+    <ul v-for="book in books" class="book">
+        <li>{{ book.name }}</li>
+        <li>{{ book.author }}</li>
+        <li>{{ book.publishedAt }}</li>
+    </ul>
+    <my-componentobj v-for="book in books" :key="book.name" :book-info="book" />
+</div>
+<div id="app3">
+    <!-- 以物件作為props傳遞 -->
+    <ul v-for="book in books" class="book">
+        <li>{{ book.name }}</li>
+        <li>{{ book.author }}</li>
+        <li>{{ book.publishedAt }}</li>
+    </ul>
+    <my-component v-for="book in books" :key="book.name" :name="book.name" :author="book.author"
+        :publishedat="book.publishedAt" />
+</div>
+<br />
+<br />
+<h5>-- props in event out-- </h5>
+<p>父層資料透過event傳入子層，而子層透過event 來觸發父層狀態的更新。</p>
+<p>像這樣，自己(each component)的資料自己改，才是 Vue.js 元件維護資料最安全的方式！不要像上面一樣，利用obj傳址的方式連動資料。</p>
+<div id="app4">
+    <ul v-for="(book, idx) in books" class="book" :key="book.id">
+        <li>{{ book.name }}</li>
+        <li>{{ book.author }}</li>
+        <li>{{ book.publishedAt }}</li>
+    </ul>
+    <hr>
+    <!-- 直接將 v-for 的 book 物件作為 props 傳遞，props直接解譯各個參數！ -->
+    <!-- 並監聽(watch)自訂的 update 事件 -->
+    <my-component v-for="(book, idx) in books" :key="idx" v-bind="book" v-on:update="updateInfo"></my-component>
+</div>
+<br />
+<br />
+<h5>-- provide and inject-- </h5>
+<p>父層的元件資料通常會透過prep來傳遞給子層元件，那麼假設我們有更深一層的資料要進行傳遞，例如根元件傳給最底部的元件，則就要使用provide和inject了</p>
+<div id="app5">
+    <input type="text" v-model="msg">
+    <list-component></list-component>
+</div>
+
+
+<br>
+<br>
+<h6>跨 component 控制</h6>
+<div id="app6">
+    <h1>Total: {{ sum }}</h1>
+    <button-counter v-on:add-sum="plus"></button-counter>
+    <button-counter v-on:add-sum="plus"></button-counter>
+    <button-reset></button-reset>
+</div>

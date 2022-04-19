@@ -1,0 +1,158 @@
+﻿@section Scripts
+{
+<script src="~/js/index_ten.js"></script>
+}
+@section Styles
+{
+<style>
+    #app {
+        position: relative;
+        display: block;
+        padding: 1rem;
+        font-size: 1rem;
+    }
+
+    button {
+        font-size: 1rem;
+    }
+
+    .block {
+        display: block;
+        width: 150px;
+        height: 100px;
+        text-align: center;
+        line-height: 100px;
+        background-color: #0f0;
+
+    }
+
+    .v-enter-active,
+    .v-leave-active {
+        transition: opacity 1s;
+    }
+
+    .v-enter-from,
+    .v-leave-to {
+        opacity: 0;
+    }
+
+    .v-enter-to,
+    .v-leave-from {
+        opacity: 1;
+    }
+
+    .davidjan-enter-active,
+    .davidjan-leave-active {
+        opacity: opacity 10s;
+    }
+
+    .davidjan-enter-from,
+    .davidjan-leave-to {
+        opacity: 0;
+    }
+
+    .davidjan-enter-to,
+    .davidjan-leave-from {
+        opacity: 1;
+    }
+
+
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 1s;
+    }
+
+    .fade-enter-from,
+    .fade-leave-to {
+        opacity: 0;
+    }
+
+    .fade-enter-to,
+    .fade-leave-from {
+        opacity: 1;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"  />
+}
+
+
+
+<!--
+    v-enter-from -> v-enter-to :進場(無到有)
+
+    v-leave-from -> v-leave-to: 出場(有到無)
+
+    v-move:改變位置時進行的動畫。
+-->
+<h1>transition 動畫</h1>
+<div id="app">
+    <div style="height: 120px;">
+        <transition>
+            <!-- 這裡透過 v-show 來控制顯示或隱藏 -->
+            <div class="block" v-show="isShow">HELLO VUE</div>
+        </transition>
+
+        <!-- 替 transition 取名子-->
+        <transition name="davidjan">
+            <!-- 這裡透過 v-show 來控制顯示或隱藏 -->
+            <div class="block" v-show="isShow">HELLO VUE</div>
+        </transition>
+    </div>
+
+    <button v-on:click="isShow =! isShow">Toggle</button>
+</div>
+<br />
+<br />
+<p>條件與動態切換</p>
+<p>需要注意的是，若我們要在 transition 進行多個 DOM 元素 (或元件) 切換時，必須寫成v-if, v-else-if, v-else，或採用:is才會正常運作</p>
+<p>這是因為transition內，只能有一個原生 DOM 元素 (或元件) 存在！ </p>
+<div id="app2">
+    <button v-on:click="isShow =! isShow">Toggle</button>
+    <div style="height: 120px;">
+        <transition name="fade" mode="out-in">
+            <!-- mode有 in-out(進先離後) 和 out-in(離先進後)，在大多數情況下，out-in是比較好的選擇！！-->
+            <div class="block" v-if="isShow">Block 1</div>
+            <div class="block" v-else>Block 2</div>
+        </transition>
+    </div>
+</div>
+
+<br />
+<br />
+<p>複數元件渲染</p>
+<p>由於在transition內部只能有一個原生 DOM 元素或者元件，所以如果遇到同時有多組v-if時，就必須改用transition-group來使用</p>
+<div id="app3">
+    <div class="mode">
+        <label>
+            <input v-model="demo" type="radio" value="A"> Block A
+        </label>
+        <label>
+            <input v-model="demo" type="radio" value="B"> Block B
+        </label>
+        <label>
+            <input v-model="demo" type="radio" value="C"> Block C
+        </label>
+    </div>
+
+    <!-- 
+        1.transition-gorup 不能用 mode 
+    -->
+    <transition-group name="fade">
+        <div v-if="demo === 'A'" :key="block-a" class="block">A Block</div>
+        <div v-if="demo === 'B'" :key="block-b" class="block">B Block</div>
+        <div v-if="demo === 'C'" :key="block-c" class="block">C Block</div>
+    </transition-group>
+</div>
+
+
+<br />
+<br />
+<p>animate.css</p>
+<div id="app4">
+<div class="wrap">
+    <button  v-for="c in animateClasses" v-on:click="activedAnimate(c)">{{ c }}</button>
+  </div>
+  
+  <div ref="block" class="block" :class="animatedClassName">Block</div> 
+</div>
